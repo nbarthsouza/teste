@@ -1,0 +1,37 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      
+      nome: Publicar imagem do Docker
+em:
+  versão:
+    tipos: [published]
+trabalhos:
+  push_to_registry:
+    Nome: Push Docker image to Docker Hub
+    runs-on: ubuntu-latest
+    etapas:
+      - nome: Verificar repo
+        usa: actions/checkout@v2
+      - nome: Push to Docker Hub
+        usa: docker/build-push-action@v1
+        com:
+          nome de usuário: ${{ secrets.DOCKER_USERNAME }}
+          senha: ${{ secrets.DOCKER_PASSWORD }}
+          repositório: my-docker-hub-namespace/my-docker-hub-repository
+          tag_with_ref: true
