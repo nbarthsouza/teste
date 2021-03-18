@@ -21,4 +21,6 @@ EXPOSE 8080
 
 EXPOSE 9090
 
+EXPOSE 9000
+
 CMD ["sh", "-c", "java -jar /app/springbootdemo.jar" ]
